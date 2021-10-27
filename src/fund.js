@@ -21,7 +21,7 @@ const FundProvider = (props) => {
     if (web3 && account) {
       const contract = new web3.eth.Contract(
         FundAbi,
-        "0x9EF8E9A8A9a8041daC87C48A6FFDdaA2dFaeB143"
+        "0xaa897dc30A3886Ab6DCA33Da706aC17070dD0702"
       );
       contract.setProvider(web3);
 
