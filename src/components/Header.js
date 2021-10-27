@@ -1,12 +1,12 @@
-import { utils } from "web3";
+import { formatWei, shortenAddress } from "../utils";
 import { useWeb3 } from "../web3";
 
 import "./header.css";
 
 const Header = () => {
   const { active, account, balance, connect } = useWeb3();
-  const shortAccount = account.slice(0, 4) + "..." + account.slice(-4);
-  const readableBalance = parseFloat(utils.fromWei(balance)).toFixed(3);
+  const shortAccount = shortenAddress(account);
+  const readableBalance = formatWei(balance);
 
   return (
     <header>

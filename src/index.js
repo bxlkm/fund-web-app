@@ -4,11 +4,14 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Web3Provider from "./web3";
+import FundProvider from "./fund";
 
 ReactDOM.render(
   <React.StrictMode>
     <Web3Provider>
-      <App />
+      <FundProvider>
+        <App />
+      </FundProvider>
     </Web3Provider>
   </React.StrictMode>,
   document.getElementById("root")

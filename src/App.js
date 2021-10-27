@@ -1,11 +1,11 @@
+import Form from "./components/Form";
 import Header from "./components/Header";
-import { useWeb3 } from "./web3";
 
 function App() {
-  const { account, web3 } = useWeb3();
   return (
     <div>
       <Header />
+      <Form />
     </div>
   );
 }
