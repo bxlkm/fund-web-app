@@ -6,30 +6,32 @@ import FundAbi from "./abi/fund.abi.json";
 const fundContext = createContext();
 
 const FundProvider = (props) => {
-  const { web3 } = useWeb3();
+  const { web3, account } = useWeb3();
   const [fundContract, setFundContract] = useState();
   const [owner, setOwner] = useState();
+  const [donated, setDonated] = useState();
+  const [donators, setDonators] = useState();
 
   useEffect(() => {
-    if (web3) {
+    if (web3 && account) {
       const contract = new web3.eth.Contract(
         FundAbi,
-        "0x23F9598cE9562f9B2D1414619CFEb105210DcdC7"
+        "0x9EF8E9A8A9a8041daC87C48A6FFDdaA2dFaeB143"
       );
       contract.setProvider(web3);
+
+      contract.methods.getOwner().call().then(setOwner);
+      contract.methods.getDonations(account).call().then(setDonated);
+      contract.methods.getDonators().call().then(setDonators);
       setFundContract(contract);
     }
-  }, [web3]);
-
-  useEffect(() => {
-    if (fundContract) {
-      fundContract.methods.getOwner().call().then(setOwner); // request owner of the contract to whom donations will be sent
-    }
-  }, [fundContract]);
+  }, [web3, account]);
 
   const contextValue = {
     fundContract,
     owner,
+    donated,
+    donators,
   };
 
   return <fundContext.Provider value={contextValue} {...props} />;

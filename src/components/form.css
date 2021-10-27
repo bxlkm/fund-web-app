@@ -1,7 +1,11 @@
 main {
-  text-align: center;
+  text-align: left;
   max-width: 720px;
   min-width: 320px;
   margin: 0 auto;
   padding: 1rem;
+}
+
+main form > * {
+  margin-bottom: 1rem;
 }
