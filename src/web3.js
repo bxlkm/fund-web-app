@@ -15,6 +15,13 @@ const Web3Provider = (props) => {
       await window.ethereum.send("eth_requestAccounts");
       const web3 = new Web3(window.ethereum);
 
+      const chainId = await web3.eth.getChainId();
+
+      if (chainId !== 5) {
+        alert("Please switch to Goerli in MetaMask");
+        return;
+      }
+
       const accounts = await web3.eth.getAccounts();
       const account = accounts[0];
 
