@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useCallback, useContext, useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import { useWeb3 } from "./web3";
 import FundAbi from "./abi/fund.abi.json";
@@ -12,6 +12,11 @@ const FundProvider = (props) => {
   const [donated, setDonated] = useState();
   const [donators, setDonators] = useState();
 
+  const updateInfo = useCallback(() => {
+    fundContract.methods.getDonations(account).call().then(setDonated);
+    fundContract.methods.getDonators().call().then(setDonators);
+  }, [account, fundContract]);
+
   useEffect(() => {
     if (web3 && account) {
       const contract = new web3.eth.Contract(
@@ -21,17 +26,22 @@ const FundProvider = (props) => {
       contract.setProvider(web3);
 
       contract.methods.getOwner().call().then(setOwner);
-      contract.methods.getDonations(account).call().then(setDonated);
-      contract.methods.getDonators().call().then(setDonators);
       setFundContract(contract);
     }
   }, [web3, account]);
+
+  useEffect(() => {
+    if (fundContract) {
+      updateInfo();
+    }
+  }, [fundContract, updateInfo]);
 
   const contextValue = {
     fundContract,
     owner,
     donated,
     donators,
+    updateInfo,
   };
 
   return <fundContext.Provider value={contextValue} {...props} />;

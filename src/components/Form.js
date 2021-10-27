@@ -7,7 +7,7 @@ import "./form.css";
 
 const Form = () => {
   const { active, account } = useWeb3();
-  const { owner, fundContract, donated, donators } = useFund();
+  const { owner, fundContract, donated, donators, updateInfo } = useFund();
 
   const [sending, setSending] = useState(false);
   const [amount, setAmount] = useState("");
@@ -42,6 +42,7 @@ const Form = () => {
 
     setAmount("");
     setSending(false);
+    updateInfo();
   };
 
   return (
